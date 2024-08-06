@@ -8,9 +8,26 @@
     android:layout_height="match_parent"
     tools:context=".view.home.HomeActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="test"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnv_menu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        app:itemIconTint="@color/bottom_navigation_color_selected"
+        app:itemTextColor="@color/bottom_navigation_color_selected"
+        app:itemActiveIndicatorStyle="@color/transparent"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    
+    <FrameLayout
+        android:id="@+id/fl_fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bnv_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
