@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Filmku</string>
     <string name="logo_filmku">Logo Filmku</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="about">About</string>
 </resources>
