@@ -15,6 +15,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        buildConfigField("String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w200\"")
         buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org\"")
         buildConfigField("String", "AUTH", "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YjFhYmNhMmExODRkZDdmOWFlY2QzYzM1ZWZlMzllOCIsIm5iZiI6MTcyMjkyOTQ5NS41NDI4Miwic3ViIjoiNjZiMWNlNmIxNDRhMmJkMWE5OTlhNmYyIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9._CsaWfYBx7b9fhgkvv0twNDU9Dh2FRZDCY_xjWKy8nY\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -44,7 +45,15 @@ android {
 dependencies {
     //view model
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+
+    //androidx
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.2")
+
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.13.2")
 
     //hilt dagger
     implementation("com.google.dagger:hilt-android:2.46")

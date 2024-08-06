@@ -19,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
+
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null

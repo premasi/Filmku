@@ -27,8 +27,8 @@ class AppModule {
         }
 
         val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
-            .connectTimeout(1000, TimeUnit.SECONDS)
-            .readTimeout(1000, TimeUnit.SECONDS)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
             .build()
 
         val retrofit = Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).addConverterFactory(

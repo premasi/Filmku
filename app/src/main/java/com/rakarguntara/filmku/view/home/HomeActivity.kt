@@ -11,10 +11,12 @@ import com.rakarguntara.filmku.databinding.ActivityHomeBinding
 import com.rakarguntara.filmku.view.home.fragments.AboutFragment
 import com.rakarguntara.filmku.view.home.fragments.HomeFragment
 import com.rakarguntara.filmku.view.home.fragments.TagFavoritesFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     private var _binding : ActivityHomeBinding? = null
@@ -27,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
 
