@@ -8,4 +8,6 @@
     <string name="movie_illustration">Movie Illustration</string>
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming">Upcoming</string>
 </resources>

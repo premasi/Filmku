@@ -4,6 +4,7 @@ import com.rakarguntara.filmku.BuildConfig
 import com.rakarguntara.filmku.models.NowPlayingMovieResponse
 import com.rakarguntara.filmku.models.PopularMovieResponse
 import com.rakarguntara.filmku.models.TopRatedMovieResponse
+import com.rakarguntara.filmku.models.UpcomingMovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -32,4 +33,10 @@ interface ApiService {
         @Query("page") page: Int = 1
     ) : NowPlayingMovieResponse
 
+    @GET("/3/movie/upcoming")
+    suspend fun getAllUpcomingMovie(
+        @Header("Authorization") auth: String = BuildConfig.AUTH,
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1
+    ) : UpcomingMovieResponse
 }

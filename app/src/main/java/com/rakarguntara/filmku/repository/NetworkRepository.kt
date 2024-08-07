@@ -2,8 +2,10 @@ package com.rakarguntara.filmku.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.rakarguntara.filmku.models.NowPlayingMovieResponse
 import com.rakarguntara.filmku.models.PopularMovieResponse
 import com.rakarguntara.filmku.models.TopRatedMovieResponse
+import com.rakarguntara.filmku.models.UpcomingMovieResponse
 import com.rakarguntara.filmku.network.ApiService
 import com.rakarguntara.filmku.network.NetworkState
 import javax.inject.Inject
@@ -24,6 +26,26 @@ class NetworkRepository @Inject constructor(private val apiService: ApiService) 
         emit(NetworkState.Loading)
         try {
             val service = apiService.getAllTopRatedMovie(page = page)
+            emit(NetworkState.Success(service))
+        } catch (e: Exception){
+            emit(NetworkState.Error(e.message.toString()))
+        }
+    }
+
+    fun getAllNowPlayingMovie(page: Int): LiveData<NetworkState<NowPlayingMovieResponse>> = liveData {
+        emit(NetworkState.Loading)
+        try {
+            val service = apiService.getAllNowPlayingMovie(page = page)
+            emit(NetworkState.Success(service))
+        } catch (e: Exception){
+            emit(NetworkState.Error(e.message.toString()))
+        }
+    }
+
+    fun getAllUpcomingMovie(page: Int): LiveData<NetworkState<UpcomingMovieResponse>> = liveData {
+        emit(NetworkState.Loading)
+        try {
+            val service = apiService.getAllUpcomingMovie(page = page)
             emit(NetworkState.Success(service))
         } catch (e: Exception){
             emit(NetworkState.Error(e.message.toString()))

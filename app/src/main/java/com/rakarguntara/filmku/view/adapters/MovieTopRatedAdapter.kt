@@ -37,6 +37,6 @@ class MovieTopRatedAdapter: RecyclerView.Adapter<MovieTopRatedAdapter.MovieTopRa
 
     override fun onBindViewHolder(holder: MovieTopRatedViewHolder, position: Int) {
         val data : ResultsTopRatedItem = movieTopRatedArrayList[position]
-        holder.bind(data)
+        return holder.bind(data)
     }
 }
