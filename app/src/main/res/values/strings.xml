@@ -10,4 +10,9 @@
     <string name="top_rated">Top Rated</string>
     <string name="now_playing">Now Playing</string>
     <string name="upcoming">Upcoming</string>
+    <string name="status">Status:</string>
+    <string name="no_information">No information</string>
+    <string name="released_date">Released Date:</string>
+    <string name="popularity">Popularity:</string>
+    <string name="genre">Genre:</string>
 </resources>

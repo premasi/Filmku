@@ -1,5 +1,8 @@
 package com.rakarguntara.filmku.view.home.fragments
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.rakarguntara.filmku.BuildConfig
+import com.rakarguntara.filmku.R
 import com.rakarguntara.filmku.databinding.FragmentHomeBinding
+import com.rakarguntara.filmku.databinding.PopupMovieSimpleInformationBinding
+import com.rakarguntara.filmku.models.DetailMovieResponse
 import com.rakarguntara.filmku.network.NetworkState
 import com.rakarguntara.filmku.utils.listener.OnMovieItemClickListener
 import com.rakarguntara.filmku.utils.loading.showLoading
@@ -29,6 +37,10 @@ class HomeFragment : Fragment() {
     private var movieTopRatedAdapter: MovieTopRatedAdapter? = null
     private var movieNowPlayingAdapter: MovieNowPlayingAdapter? = null
     private var movieUpcomingAdapter: MovieUpcomingAdapter? = null
+    //popup dialog
+    private var popupMovieSimpleInformationDialog: Dialog? = null
+    private var _popupMovieSimpleInformationBinding: PopupMovieSimpleInformationBinding? = null
+    private val popupMovieSimpleInformationBinding get() = _popupMovieSimpleInformationBinding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,16 +62,89 @@ class HomeFragment : Fragment() {
         setupNowPlayingMovieAdapter()
         setupUpcomingMovieAdapter()
 
+        //setup popup dialog
+        setupPopupDialog()
+
         //setup condition for movie item when get click
         setupConditionMovieItemClick()
     }
 
+    private fun setupPopupDialog() {
+        popupMovieSimpleInformationDialog = Dialog(requireActivity())
+        _popupMovieSimpleInformationBinding = PopupMovieSimpleInformationBinding.inflate(requireActivity().layoutInflater)
+        popupMovieSimpleInformationBinding.let {
+            popupMovieSimpleInformationDialog?.setContentView(it.root)
+        }
+        popupMovieSimpleInformationDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupMovieSimpleInformationDialog?.window?.setBackgroundDrawableResource(R.drawable.custom_background)
+        popupMovieSimpleInformationDialog?.window?.setDimAmount(0.5f)
+        popupMovieSimpleInformationDialog?.setCancelable(true)
+    }
+
     private fun setupConditionMovieItemClick() {
+        movieUpcomingAdapter?.onMovieItemClickListener(object : OnMovieItemClickListener{
+            override fun onMovieItemClick(id: Int?) {
+                popupMovieSimpleInformationDialog?.show()
+                setupMovieDetailSimple(id!!)
+            }
+
+        })
+
         movieNowPlayingAdapter?.onMovieItemClickListener(object : OnMovieItemClickListener{
             override fun onMovieItemClick(id: Int?) {
-                Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
+                popupMovieSimpleInformationDialog?.show()
+                setupMovieDetailSimple(id!!)
             }
         })
+
+        movieTopRatedAdapter?.onMovieItemClickListener(object : OnMovieItemClickListener{
+            override fun onMovieItemClick(id: Int?) {
+                popupMovieSimpleInformationDialog?.show()
+                setupMovieDetailSimple(id!!)
+            }
+
+        })
+
+        moviePopularAdapter?.onMovieItemClickListener(object : OnMovieItemClickListener{
+            override fun onMovieItemClick(id: Int?) {
+                popupMovieSimpleInformationDialog?.show()
+                setupMovieDetailSimple(id!!)
+            }
+
+        })
+    }
+
+    private fun setupMovieDetailSimple(id: Int) {
+        homeViewModel?.getMovieDetail(id)?.observe(viewLifecycleOwner){ response ->
+            if(response != null){
+                when(response){
+                    is NetworkState.Error -> {
+                        showLoading(binding.pbHome, false)
+                        Toast.makeText(context, response.error, Toast.LENGTH_SHORT).show()
+                    }
+                    NetworkState.Loading -> {
+                        showLoading(binding.pbHome, true)
+                    }
+                    is NetworkState.Success -> {
+                        showLoading(binding.pbHome, false)
+                        setMovieDetailSimpleData(response.data)
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun setMovieDetailSimpleData(data: DetailMovieResponse) {
+        Glide.with(requireActivity())
+            .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w200${data.posterPath}")
+            .into(popupMovieSimpleInformationBinding.ivMovieSimpleInformation)
+
+        popupMovieSimpleInformationBinding.tvMovieSimpleInformationTitle.text = data.title
+        popupMovieSimpleInformationBinding.tvMovieSimpleInformationStatusActual.text = data.status
+        popupMovieSimpleInformationBinding.tvMovieSimpleInformationPopularityActual.text = data.popularity.toString()
+        popupMovieSimpleInformationBinding.tvMovieSimpleInformationDateActual.text = data.releaseDate
+
     }
 
     private fun setupUpcomingMovieAdapter() {
@@ -162,6 +247,8 @@ class HomeFragment : Fragment() {
         movieTopRatedAdapter = null
         movieNowPlayingAdapter = null
         movieUpcomingAdapter = null
+        popupMovieSimpleInformationDialog = null
+        _popupMovieSimpleInformationBinding = null
     }
 
 }

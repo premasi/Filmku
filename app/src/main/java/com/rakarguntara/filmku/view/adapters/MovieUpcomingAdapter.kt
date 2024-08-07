@@ -7,9 +7,12 @@ import com.bumptech.glide.Glide
 import com.rakarguntara.filmku.BuildConfig
 import com.rakarguntara.filmku.databinding.RvContentMovieItemBinding
 import com.rakarguntara.filmku.models.ResultsUpcomingItem
+import com.rakarguntara.filmku.utils.animations.animateMcvClick
+import com.rakarguntara.filmku.utils.listener.OnMovieItemClickListener
 
 class MovieUpcomingAdapter: RecyclerView.Adapter<MovieUpcomingAdapter.MovieUpcomingViewHolder>() {
     private val movieUpcomingArrayList = ArrayList<ResultsUpcomingItem>()
+    private var onMovieItemClickListener: OnMovieItemClickListener? = null
 
     fun setData(list: List<ResultsUpcomingItem>){
         movieUpcomingArrayList.clear()
@@ -17,11 +20,20 @@ class MovieUpcomingAdapter: RecyclerView.Adapter<MovieUpcomingAdapter.MovieUpcom
         notifyDataSetChanged()
     }
 
+    fun onMovieItemClickListener(onMovieItemClickListener: OnMovieItemClickListener){
+        this.onMovieItemClickListener = onMovieItemClickListener
+    }
+
     inner class MovieUpcomingViewHolder(private val binding: RvContentMovieItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ResultsUpcomingItem){
             Glide.with(itemView.context)
                 .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w200${item.posterPath}")
                 .into(binding.ivMoviePopularItem)
+
+            binding.mcvMoviePopularItem.setOnClickListener {
+                animateMcvClick(binding.mcvMoviePopularItem)
+                onMovieItemClickListener?.onMovieItemClick(item.id)
+            }
         }
 
     }

@@ -15,13 +15,13 @@
         android:background="@color/gray"
         app:itemIconTint="@color/bottom_navigation_color_selected"
         app:itemTextColor="@color/bottom_navigation_color_selected"
-        app:itemActiveIndicatorStyle="@color/transparent"
+        app:itemActiveIndicatorStyle="@style/ShapeAppearance.Material3.NavigationBarView.ActiveIndicator"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    
+
     <FrameLayout
         android:id="@+id/fl_fragment"
         android:layout_width="0dp"

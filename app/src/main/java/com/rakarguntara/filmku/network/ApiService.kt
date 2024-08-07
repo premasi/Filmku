@@ -1,12 +1,14 @@
 package com.rakarguntara.filmku.network
 
 import com.rakarguntara.filmku.BuildConfig
+import com.rakarguntara.filmku.models.DetailMovieResponse
 import com.rakarguntara.filmku.models.NowPlayingMovieResponse
 import com.rakarguntara.filmku.models.PopularMovieResponse
 import com.rakarguntara.filmku.models.TopRatedMovieResponse
 import com.rakarguntara.filmku.models.UpcomingMovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Singleton
 
@@ -39,4 +41,11 @@ interface ApiService {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
     ) : UpcomingMovieResponse
+
+    @GET("/3/movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Header("Authorization") auth: String = BuildConfig.AUTH,
+        @Path("movie_id") id: Int,
+        @Query("language") language: String = "en-US",
+    ) : DetailMovieResponse
 }

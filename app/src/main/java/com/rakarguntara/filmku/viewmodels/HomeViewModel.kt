@@ -14,4 +14,6 @@ class HomeViewModel @Inject constructor(private val repository: NetworkRepositor
     fun getAllNowPlayingMovie(page: Int) = repository.getAllNowPlayingMovie(page)
 
     fun getAllUpcomingMovie(page: Int) = repository.getAllUpcomingMovie(page)
+
+    fun getMovieDetail(id: Int) = repository.getMovieDetail(id)
 }
