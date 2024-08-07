@@ -8,4 +8,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: NetworkRepository) : ViewModel() {
     fun getAllPopularMovie(page: Int) = repository.getAllPopularMovie(page)
+
+    fun getAllTopRatedMovie(page: Int) = repository.getAllTopRatedMovie(page)
 }

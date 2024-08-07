@@ -13,6 +13,7 @@ import com.rakarguntara.filmku.databinding.FragmentHomeBinding
 import com.rakarguntara.filmku.network.NetworkState
 import com.rakarguntara.filmku.utils.loading.showLoading
 import com.rakarguntara.filmku.view.adapters.MoviePopularAdapter
+import com.rakarguntara.filmku.view.adapters.MovieTopRatedAdapter
 import com.rakarguntara.filmku.viewmodels.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -21,6 +22,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private var homeViewModel : HomeViewModel? = null
     private var moviePopularAdapter: MoviePopularAdapter? = null
+    private var movieTopRatedAdapter: MovieTopRatedAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,31 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMoviePopularAdapter()
+        setupTopRatedMovieAdapter()
+    }
+
+    private fun setupTopRatedMovieAdapter() {
+        movieTopRatedAdapter = MovieTopRatedAdapter()
+        binding.rvMovieTopRated.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        homeViewModel?.getAllTopRatedMovie(1)?.observe(viewLifecycleOwner){response ->
+            if(response != null){
+                when(response){
+                    is NetworkState.Error -> {
+                        showLoading(binding.pbHome, false)
+                        Toast.makeText(context, response.error ,Toast.LENGTH_SHORT).show()
+                    }
+                    NetworkState.Loading -> {
+                        showLoading(binding.pbHome, true)
+                    }
+                    is NetworkState.Success -> {
+                        showLoading(binding.pbHome, false)
+                        movieTopRatedAdapter?.setData(response.data.results)
+                        binding.rvMovieTopRated.adapter = movieTopRatedAdapter
+                        Toast.makeText(context, response.data.results.size ,Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun setupMoviePopularAdapter(){
@@ -46,15 +73,13 @@ class HomeFragment : Fragment() {
                 when(response){
                     is NetworkState.Error -> {
                         showLoading(binding.pbHome, false)
-                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, response.error, Toast.LENGTH_SHORT).show()
                     }
                     NetworkState.Loading -> {
                         showLoading(binding.pbHome, true)
                     }
                     is NetworkState.Success -> {
                         showLoading(binding.pbHome, false)
-                        Toast.makeText(requireActivity(),"test", Toast.LENGTH_SHORT).show()
-                        Log.d("Movie Popular", "setupMoviePopularAdapter: ${response.data}")
                         moviePopularAdapter?.setData(response.data.results)
                         binding.rvMoviePopular.adapter = moviePopularAdapter
                     }
