@@ -17,9 +17,11 @@ import com.rakarguntara.filmku.R
 import com.rakarguntara.filmku.databinding.FragmentHomeBinding
 import com.rakarguntara.filmku.databinding.PopupMovieSimpleInformationBinding
 import com.rakarguntara.filmku.models.DetailMovieResponse
+import com.rakarguntara.filmku.models.GenresItem
 import com.rakarguntara.filmku.network.NetworkState
 import com.rakarguntara.filmku.utils.listener.OnMovieItemClickListener
 import com.rakarguntara.filmku.utils.loading.showLoading
+import com.rakarguntara.filmku.view.adapters.GenreAdapter
 import com.rakarguntara.filmku.view.adapters.MovieNowPlayingAdapter
 import com.rakarguntara.filmku.view.adapters.MoviePopularAdapter
 import com.rakarguntara.filmku.view.adapters.MovieTopRatedAdapter
@@ -37,6 +39,7 @@ class HomeFragment : Fragment() {
     private var movieTopRatedAdapter: MovieTopRatedAdapter? = null
     private var movieNowPlayingAdapter: MovieNowPlayingAdapter? = null
     private var movieUpcomingAdapter: MovieUpcomingAdapter? = null
+    private var genreAdapter: GenreAdapter? = null
     //popup dialog
     private var popupMovieSimpleInformationDialog: Dialog? = null
     private var _popupMovieSimpleInformationBinding: PopupMovieSimpleInformationBinding? = null
@@ -144,7 +147,16 @@ class HomeFragment : Fragment() {
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationStatusActual.text = data.status
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationPopularityActual.text = data.popularity.toString()
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationDateActual.text = data.releaseDate
+        setupGenreAdapter(data.genres)
+    }
 
+    private fun setupGenreAdapter(genre: List<GenresItem>) {
+        genreAdapter = GenreAdapter()
+        popupMovieSimpleInformationBinding.rvMovieSimpleInformationGenre.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        genreAdapter?.setData(genre)
+        popupMovieSimpleInformationBinding.rvMovieSimpleInformationGenre.adapter =
+            genreAdapter
     }
 
     private fun setupUpcomingMovieAdapter() {
