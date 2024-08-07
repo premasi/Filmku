@@ -1,9 +1,12 @@
 package com.rakarguntara.filmku.models
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Entity(tableName = "movie_detail_table")
 @Parcelize
 data class DetailMovieResponse(
 
@@ -34,8 +37,9 @@ data class DetailMovieResponse(
 	@field:SerializedName("production_countries")
 	val productionCountries: List<ProductionCountriesItem?>? = null,
 
+	@PrimaryKey
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Int,
 
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null,

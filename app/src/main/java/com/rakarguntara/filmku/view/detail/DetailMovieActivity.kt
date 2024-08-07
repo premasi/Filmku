@@ -61,7 +61,7 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun setupDetailFromApi(movieDetailData: DetailMovieResponse) {
-        detalViewModel.getMovieDetail(movieDetailData.id!!).observe(this@DetailMovieActivity){ response ->
+        detalViewModel.getMovieDetail(movieDetailData.id).observe(this@DetailMovieActivity){ response ->
             if(response != null){
                 when(response){
                     is NetworkState.Error -> {
