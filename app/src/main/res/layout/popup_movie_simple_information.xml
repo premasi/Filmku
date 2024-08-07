@@ -7,6 +7,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:contentDescription="@string/arrow_back"
+        android:src="@drawable/ic_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/holo_red_light" />
+
+    <ImageView
         android:id="@+id/iv_movie_simple_information"
         android:layout_width="150dp"
         android:layout_height="200dp"
@@ -16,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/iv_close" />
 
     <TextView
         android:id="@+id/tv_movie_simple_information_title"
@@ -107,7 +117,7 @@
             android:fontFamily="@font/avenirnextltpro_regular"
             android:textColor="@color/dark_gray"
             android:textSize="12sp"
-            android:text="@string/popularity"
+            android:text="@string/rating"
             />
 
         <TextView
@@ -140,11 +150,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_movie_simple_information_genre" />
+
+    <Button
+        android:id="@+id/btn_more_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/navy"
+        android:text="@string/more_detail"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_movie_simple_information_genre" />
 
 
 

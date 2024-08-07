@@ -1,7 +1,10 @@
 package com.rakarguntara.filmku.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class DetailMovieResponse(
 
 	@field:SerializedName("original_language")
@@ -56,10 +59,10 @@ data class DetailMovieResponse(
 	val originCountry: List<String?>? = null,
 
 	@field:SerializedName("spoken_languages")
-	val spokenLanguages: List<SpokenLanguagesItem?>? = null,
+	val spokenLanguages: List<SpokenLanguagesItem>? = null,
 
 	@field:SerializedName("production_companies")
-	val productionCompanies: List<ProductionCompaniesItem?>? = null,
+	val productionCompanies: List<ProductionCompaniesItem>,
 
 	@field:SerializedName("release_date")
 	val releaseDate: String? = null,
@@ -81,8 +84,9 @@ data class DetailMovieResponse(
 
 	@field:SerializedName("status")
 	val status: String? = null
-)
+): Parcelable
 
+@Parcelize
 data class ProductionCompaniesItem(
 
 	@field:SerializedName("logo_path")
@@ -96,8 +100,9 @@ data class ProductionCompaniesItem(
 
 	@field:SerializedName("origin_country")
 	val originCountry: String? = null
-)
+): Parcelable
 
+@Parcelize
 data class GenresItem(
 
 	@field:SerializedName("name")
@@ -105,8 +110,9 @@ data class GenresItem(
 
 	@field:SerializedName("id")
 	val id: Int? = null
-)
+): Parcelable
 
+@Parcelize
 data class BelongsToCollection(
 
 	@field:SerializedName("backdrop_path")
@@ -120,8 +126,9 @@ data class BelongsToCollection(
 
 	@field:SerializedName("poster_path")
 	val posterPath: String? = null
-)
+): Parcelable
 
+@Parcelize
 data class SpokenLanguagesItem(
 
 	@field:SerializedName("name")
@@ -132,8 +139,9 @@ data class SpokenLanguagesItem(
 
 	@field:SerializedName("english_name")
 	val englishName: String? = null
-)
+): Parcelable
 
+@Parcelize
 data class ProductionCountriesItem(
 
 	@field:SerializedName("iso_3166_1")
@@ -141,4 +149,4 @@ data class ProductionCountriesItem(
 
 	@field:SerializedName("name")
 	val name: String? = null
-)
+): Parcelable

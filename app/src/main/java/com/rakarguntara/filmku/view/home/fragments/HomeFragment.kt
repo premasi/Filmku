@@ -1,6 +1,7 @@
 package com.rakarguntara.filmku.view.home.fragments
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -19,6 +21,7 @@ import com.rakarguntara.filmku.databinding.PopupMovieSimpleInformationBinding
 import com.rakarguntara.filmku.models.DetailMovieResponse
 import com.rakarguntara.filmku.models.GenresItem
 import com.rakarguntara.filmku.network.NetworkState
+import com.rakarguntara.filmku.utils.animations.animateIvClick
 import com.rakarguntara.filmku.utils.listener.OnMovieItemClickListener
 import com.rakarguntara.filmku.utils.loading.showLoading
 import com.rakarguntara.filmku.view.adapters.GenreAdapter
@@ -26,6 +29,7 @@ import com.rakarguntara.filmku.view.adapters.MovieNowPlayingAdapter
 import com.rakarguntara.filmku.view.adapters.MoviePopularAdapter
 import com.rakarguntara.filmku.view.adapters.MovieTopRatedAdapter
 import com.rakarguntara.filmku.view.adapters.MovieUpcomingAdapter
+import com.rakarguntara.filmku.view.detail.DetailMovieActivity
 import com.rakarguntara.filmku.viewmodels.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -81,7 +85,7 @@ class HomeFragment : Fragment() {
         popupMovieSimpleInformationDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         popupMovieSimpleInformationDialog?.window?.setBackgroundDrawableResource(R.drawable.custom_background)
         popupMovieSimpleInformationDialog?.window?.setDimAmount(0.5f)
-        popupMovieSimpleInformationDialog?.setCancelable(true)
+        popupMovieSimpleInformationDialog?.setCancelable(false)
     }
 
     private fun setupConditionMovieItemClick() {
@@ -145,9 +149,30 @@ class HomeFragment : Fragment() {
 
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationTitle.text = data.title
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationStatusActual.text = data.status
-        popupMovieSimpleInformationBinding.tvMovieSimpleInformationPopularityActual.text = data.popularity.toString()
+        popupMovieSimpleInformationBinding.tvMovieSimpleInformationPopularityActual.text = data.voteAverage.toString().split(".")[0]
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationDateActual.text = data.releaseDate
         setupGenreAdapter(data.genres)
+
+        popupMovieSimpleInformationBinding.ivClose.setOnClickListener {
+            animateIvClick(popupMovieSimpleInformationBinding.ivClose)
+            popupMovieSimpleInformationDialog?.dismiss()
+
+            Glide.with(requireActivity())
+                .load(R.color.navy)
+                .into(popupMovieSimpleInformationBinding.ivMovieSimpleInformation)
+
+            popupMovieSimpleInformationBinding.tvMovieSimpleInformationTitle.text =
+                getString(R.string.emptystring)
+            popupMovieSimpleInformationBinding.tvMovieSimpleInformationStatusActual.text = getString(R.string.emptystring)
+            popupMovieSimpleInformationBinding.tvMovieSimpleInformationPopularityActual.text = getString(R.string.emptystring)
+            popupMovieSimpleInformationBinding.tvMovieSimpleInformationDateActual.text = getString(R.string.emptystring)
+        }
+
+        popupMovieSimpleInformationBinding.btnMoreDetail.setOnClickListener {
+            val intent = Intent(requireActivity(), DetailMovieActivity::class.java)
+            intent.putExtra(DetailMovieActivity.MOVIE_DETAIL, data)
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        }
     }
 
     private fun setupGenreAdapter(genre: List<GenresItem>) {
@@ -259,6 +284,7 @@ class HomeFragment : Fragment() {
         movieTopRatedAdapter = null
         movieNowPlayingAdapter = null
         movieUpcomingAdapter = null
+        genreAdapter = null
         popupMovieSimpleInformationDialog = null
         _popupMovieSimpleInformationBinding = null
     }
