@@ -2,6 +2,7 @@ package com.rakarguntara.filmku.utils.animations
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
 
 fun animateMcvClick(mcv: MaterialCardView) {
@@ -44,6 +45,22 @@ fun animateViewClick(view: View) {
         .withEndAction {
             // Reset the scale back to normal
             view.animate()
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(100)
+                .start()
+        }
+        .start()
+}
+
+fun animateTextViewClick(tv: TextView) {
+    tv.animate()
+        .scaleX(0.80f)
+        .scaleY(0.80f)
+        .setDuration(100)
+        .withEndAction {
+            // Reset the scale back to normal
+            tv.animate()
                 .scaleX(1f)
                 .scaleY(1f)
                 .setDuration(100)

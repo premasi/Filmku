@@ -30,6 +30,7 @@ import com.rakarguntara.filmku.view.adapters.MoviePopularAdapter
 import com.rakarguntara.filmku.view.adapters.MovieTopRatedAdapter
 import com.rakarguntara.filmku.view.adapters.MovieUpcomingAdapter
 import com.rakarguntara.filmku.view.detail.DetailMovieActivity
+import com.rakarguntara.filmku.view.more.MoreActivity
 import com.rakarguntara.filmku.viewmodels.network.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -74,6 +75,36 @@ class HomeFragment : Fragment() {
 
         //setup condition for movie item when get click
         setupConditionMovieItemClick()
+
+        //setup more page
+        setupMorePage()
+
+    }
+
+    private fun setupMorePage() {
+        binding.tvMoreMoviePopular.setOnClickListener {
+            val intent = Intent(requireActivity(), MoreActivity::class.java)
+            intent.putExtra(MoreActivity.TYPE, "Popular")
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        }
+
+        binding.tvMoreMovieToprated.setOnClickListener {
+            val intent = Intent(requireActivity(), MoreActivity::class.java)
+            intent.putExtra(MoreActivity.TYPE, "Top Rated")
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        }
+
+        binding.tvMoreMovieNowPlaying.setOnClickListener {
+            val intent = Intent(requireActivity(), MoreActivity::class.java)
+            intent.putExtra(MoreActivity.TYPE, "Now Playing")
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        }
+
+        binding.tvMoreMovieUpcoming.setOnClickListener {
+            val intent = Intent(requireActivity(), MoreActivity::class.java)
+            intent.putExtra(MoreActivity.TYPE, "Upcoming")
+            startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        }
     }
 
     private fun setupPopupDialog() {

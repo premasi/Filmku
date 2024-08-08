@@ -163,6 +163,7 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/navy"
         android:text="@string/more_detail"
+        android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_movie_popular_item"
-            android:background="@color/transparent"
+            android:background="@color/gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

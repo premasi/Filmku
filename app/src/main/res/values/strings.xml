@@ -37,4 +37,7 @@
     <string name="freepik">Freepik</string>
     <string name="no_favorites_yet_add_your_favorite_movies">No favorites yet. Add your favorite movies!</string>
     <string name="more_movie">More Movie</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="_1">1</string>
 </resources>
