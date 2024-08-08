@@ -1,14 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".view.home.fragments.AboutFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="about" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_app_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_bold"
+                android:text="@string/app_name"
+                android:textColor="@color/orange"
+                android:textSize="32sp"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/by"
+                android:alpha="0"
+                android:textSize="16sp"
+                android:fontFamily="@font/avenirnextltpro_regular"
+                android:textColor="@color/dark_gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_app_name" />
+
+            <TextView
+                android:id="@+id/tv_creator_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/raka_ryandra_guntara"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_medium"
+                app:layout_constraintBottom_toBottomOf="@id/tv_by"
+                app:layout_constraintStart_toEndOf="@id/tv_by"
+                app:layout_constraintTop_toTopOf="@id/tv_by" />
+
+            <TextView
+                android:id="@+id/tv_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/avenirnextltpro_medium"
+                android:text="@string/description"
+                android:alpha="0"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_by" />
+
+            <TextView
+                android:id="@+id/tv_overview_actual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textAlignment="textStart"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_regular"
+                android:text="@string/filmku_is_an_android_application_developed_with_native_kotlin_its_purpose_is_to_provide_users_with_comprehensive_movie_information_users_can_save_their_favorite_movies_by_clicking_the_heart_icon_located_in_the_top_right_corner_of_the_movie_detail_page_the_application_retrieves_movie_data_using_the_tmdb_the_movie_database_api"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview" />
+
+            <TextView
+                android:id="@+id/tv_credits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_demi"
+                android:text="@string/credits"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_overview_actual" />
+
+            <TextView
+                android:id="@+id/tv_tmdb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_medium"
+                android:text="@string/check_tmdb_website_at"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_credits" />
+
+            <TextView
+                android:id="@+id/tv_tmdb_actual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textAlignment="textStart"
+                android:layout_marginTop="8dp"
+                android:alpha="0"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/avenirnextltpro_regular"
+                android:text="@string/api_themoviedb_org"
+                android:textColor="@color/blue"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_tmdb" />
+
+            <TextView
+                android:id="@+id/tv_iconify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_medium"
+                android:text="@string/iconify"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_tmdb_actual" />
+
+            <TextView
+                android:id="@+id/tv_iconify_actual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textAlignment="textStart"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_regular"
+                android:text="@string/icon_sets_iconify_design"
+                android:textColor="@color/blue"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_iconify" />
+
+            <TextView
+                android:id="@+id/tv_freepik"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0"
+                android:fontFamily="@font/avenirnextltpro_medium"
+                android:text="@string/freepik"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_iconify_actual" />
+
+            <TextView
+                android:id="@+id/tv_freepik_actual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textAlignment="textStart"
+                android:layout_marginTop="8dp"
+                android:alpha="0"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/avenirnextltpro_regular"
+                android:text="@string/www_freepik_com"
+                android:textColor="@color/blue"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_freepik" />
+
+            <ImageView
+                android:id="@+id/iv_thankyou"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:alpha="0"
+                android:contentDescription="@string/movie_illustration"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:src="@drawable/iv_thank"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_freepik_actual" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

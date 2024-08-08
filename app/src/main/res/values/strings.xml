@@ -25,4 +25,15 @@
     <string name="emptystring" />
     <string name="companies">Companies</string>
     <string name="my_favorites">My Favorites</string>
+    <string name="by">by</string>
+    <string name="raka_ryandra_guntara">Raka Ryandra Guntara</string>
+    <string name="filmku_is_an_android_application_developed_with_native_kotlin_its_purpose_is_to_provide_users_with_comprehensive_movie_information_users_can_save_their_favorite_movies_by_clicking_the_heart_icon_located_in_the_top_right_corner_of_the_movie_detail_page_the_application_retrieves_movie_data_using_the_tmdb_the_movie_database_api">Filmku is an Android application developed with native Kotlin. Its purpose is to provide users with comprehensive movie information. Users can save their favorite movies by clicking the heart icon located in the top-right corner of the movie detail page. The application retrieves movie data using the TMDB (The Movie Database) API.</string>
+    <string name="check_tmdb_website_at">TMDB:</string>
+    <string name="api_themoviedb_org">api.themoviedb.org</string>
+    <string name="credits">Credits</string>
+    <string name="iconify">Iconify:</string>
+    <string name="icon_sets_iconify_design">iconify.design</string>
+    <string name="www_freepik_com">www.freepik.com</string>
+    <string name="freepik">Freepik</string>
+    <string name="no_favorites_yet_add_your_favorite_movies">No favorites yet. Add your favorite movies!</string>
 </resources>

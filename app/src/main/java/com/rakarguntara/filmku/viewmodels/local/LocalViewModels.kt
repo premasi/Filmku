@@ -19,20 +19,20 @@ class LocalViewModels @Inject constructor(private val localRepository: LocalRepo
     private val _movieList = MutableStateFlow<List<DetailMovieResponse>>(emptyList())
     val movieList = _movieList.asStateFlow()
 
-    private val _movie = MutableStateFlow<DetailMovieResponse?>(null)
-    val movie: StateFlow<DetailMovieResponse?> = _movie.asStateFlow()
-
     private val _isFavorite = MutableStateFlow(false)
     val isFavorite: StateFlow<Boolean> = _isFavorite.asStateFlow()
 
-    private val _toggleResult = MutableStateFlow<ToggleResult>(ToggleResult.None)
+    private val _toggleResult = MutableStateFlow(ToggleResult.None)
     val toggleResult: StateFlow<ToggleResult> = _toggleResult.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             localRepository.getAllMovieFavorite().distinctUntilChanged()
                 .collect{list->
-                    if(list.isNotEmpty()){
+
+                    if(list.isEmpty()){
+                        _movieList.value = emptyList()
+                    } else {
                         _movieList.value = list
                     }
                 }

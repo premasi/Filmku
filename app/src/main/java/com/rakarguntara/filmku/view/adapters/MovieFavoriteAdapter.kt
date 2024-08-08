@@ -7,18 +7,29 @@ import com.bumptech.glide.Glide
 import com.rakarguntara.filmku.BuildConfig
 import com.rakarguntara.filmku.databinding.RvContentMovieFavoritesItemBinding
 import com.rakarguntara.filmku.models.DetailMovieResponse
+import com.rakarguntara.filmku.utils.animations.animateViewClick
+import com.rakarguntara.filmku.utils.listener.OnItemViewClickListener
 
 class MovieFavoriteAdapter: RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavoriteViewHolder>() {
 
     private val movieFavoriteArrayList = ArrayList<DetailMovieResponse>()
+    private var onItemViewClickListener: OnItemViewClickListener? = null
 
     fun setData(list: List<DetailMovieResponse>){
         movieFavoriteArrayList.clear()
         movieFavoriteArrayList.addAll(list)
+        setChanged()
+    }
+
+    fun setChanged(){
         notifyDataSetChanged()
     }
 
-    class MovieFavoriteViewHolder(private val binding: RvContentMovieFavoritesItemBinding): RecyclerView.ViewHolder(binding.root) {
+    fun onMovieItemClickListener(onItemViewClickListener: OnItemViewClickListener){
+        this.onItemViewClickListener = onItemViewClickListener
+    }
+
+    inner class MovieFavoriteViewHolder(private val binding: RvContentMovieFavoritesItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: DetailMovieResponse){
             Glide.with(itemView.context)
                 .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w500${item.backdropPath}")
@@ -26,6 +37,11 @@ class MovieFavoriteAdapter: RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavor
 
             binding.tvMovieTitle.text = item.title
             binding.tvMovieInformationDateActual.text = item.releaseDate
+
+            itemView.setOnClickListener {
+                animateViewClick(itemView)
+                onItemViewClickListener?.onMovieItemClick(item)
+            }
         }
 
     }

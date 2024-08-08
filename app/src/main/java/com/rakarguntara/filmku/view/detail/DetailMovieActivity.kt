@@ -18,14 +18,12 @@ import com.rakarguntara.filmku.databinding.ActivityDetailMovieBinding
 import com.rakarguntara.filmku.models.DetailMovieResponse
 import com.rakarguntara.filmku.models.GenresItem
 import com.rakarguntara.filmku.models.ProductionCompaniesItem
-import com.rakarguntara.filmku.network.NetworkState
 import com.rakarguntara.filmku.utils.animations.animateIvClick
 import com.rakarguntara.filmku.utils.loading.showLoading
 import com.rakarguntara.filmku.utils.togglestate.ToggleResult
 import com.rakarguntara.filmku.view.adapters.CompanyAdapter
 import com.rakarguntara.filmku.view.adapters.GenreAdapter
 import com.rakarguntara.filmku.viewmodels.local.LocalViewModels
-import com.rakarguntara.filmku.viewmodels.network.DetalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -37,12 +35,10 @@ class DetailMovieActivity : AppCompatActivity() {
     //receive data
     private var movieDetailData : DetailMovieResponse? = null
     //view model
-    private val detalViewModel: DetalViewModel by viewModels()
     private val localViewModels: LocalViewModels by viewModels()
     //adapter
     private var genreAdapter: GenreAdapter? = null
     private var companyAdapter: CompanyAdapter? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +59,10 @@ class DetailMovieActivity : AppCompatActivity() {
         //get parcelable for back up
         movieDetailData = intent.getParcelableExtra<DetailMovieResponse>(MOVIE_DETAIL) as DetailMovieResponse
 
-        //get detail from api
-        setupDetailFromApi(movieDetailData!!)
+
+        showLoading(binding.pbDetail, false)
+        setupMovieDetailData(movieDetailData!!)
+
 
         //setup favorite condtion
         setupFavoriteCondition(movieDetailData!!)
@@ -108,28 +106,7 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupDetailFromApi(movieDetailData: DetailMovieResponse) {
-        detalViewModel.getMovieDetail(movieDetailData.id!!).observe(this@DetailMovieActivity){ response ->
-            if(response != null){
-                when(response){
-                    is NetworkState.Error -> {
-                        showLoading(binding.pbDetail, false)
-                        Toast.makeText(this@DetailMovieActivity, response.error, Toast.LENGTH_SHORT).show()
-                    }
-                    NetworkState.Loading -> {
-                        showLoading(binding.pbDetail,true)
-                    }
-                    is NetworkState.Success -> {
-                        showLoading(binding.pbDetail, false)
-                        setupMovideDetailData(response.data)
-                    }
-                }
-            }
-
-        }
-    }
-
-    private fun setupMovideDetailData(movieDetailData: DetailMovieResponse) {
+    private fun setupMovieDetailData(movieDetailData: DetailMovieResponse) {
         Glide.with(this@DetailMovieActivity)
             .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w500${movieDetailData.backdropPath}")
             .error(R.color.navy)
@@ -165,6 +142,9 @@ class DetailMovieActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        movieDetailData = null
+        genreAdapter = null
+        companyAdapter = null
     }
 
     companion object{
