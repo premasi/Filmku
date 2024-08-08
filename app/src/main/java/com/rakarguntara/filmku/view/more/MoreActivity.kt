@@ -51,9 +51,15 @@ class MoreActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        //get movie type
-        type = intent.getStringExtra(TYPE).toString()
+
+        if (savedInstanceState != null) {
+            page = savedInstanceState.getInt("page", 1)
+            type = savedInstanceState.getString("movie_type", "Popular")
+        } else {
+            type = intent.getStringExtra(TYPE) ?: "Popular"
+        }
         binding.tvMovieType.text = type
+
         setupPopularAdapter(page)
         nextOrBackClick(type)
 
@@ -67,6 +73,7 @@ class MoreActivity : AppCompatActivity() {
         }
 
     }
+
 
 
 
@@ -158,6 +165,12 @@ class MoreActivity : AppCompatActivity() {
                 setupConditionMovieItemClick()
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("page", page)
+        outState.putString("movie_type", type)
     }
 
     private fun setupUpcomingAdapter(page: Int) {
