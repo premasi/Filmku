@@ -53,7 +53,7 @@ class MoreActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState != null) {
-            page = savedInstanceState.getInt("page", 1)
+            page = savedInstanceState.getInt("page")
             type = savedInstanceState.getString("movie_type", "Popular")
         } else {
             type = intent.getStringExtra(TYPE) ?: "Popular"
@@ -74,7 +74,13 @@ class MoreActivity : AppCompatActivity() {
 
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        binding.tvNumber.text = page.toString()
+        setupPopularAdapter(page)
+        nextOrBackClick(type)
+        setupConditionMovieItemClick()
+    }
 
 
 
