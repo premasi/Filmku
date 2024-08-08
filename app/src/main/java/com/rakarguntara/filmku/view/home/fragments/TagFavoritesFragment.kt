@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rakarguntara.filmku.databinding.FragmentTagFavoritesBinding
+import com.rakarguntara.filmku.utils.loading.showLoading
 import com.rakarguntara.filmku.view.adapters.MovieFavoriteAdapter
 import com.rakarguntara.filmku.viewmodels.local.LocalViewModels
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class TagFavoritesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         localViewModels = ViewModelProvider(requireActivity())[LocalViewModels::class.java]
         _binding = FragmentTagFavoritesBinding.inflate(inflater, container, false)
@@ -48,6 +49,7 @@ class TagFavoritesFragment : Fragment() {
     private fun setupMovieFavoriteList() {
         viewLifecycleOwner.lifecycleScope.launch {
             localViewModels?.movieList?.collect { list ->
+                showLoading(binding.pbFav, false)
                 movieFavoriteAdapter?.setData(list)
                 binding.rvMovieFavorites.adapter = movieFavoriteAdapter
             }

@@ -21,8 +21,8 @@ fun animateMcvClick(mcv: MaterialCardView) {
 
 fun animateIvClick(iv: ImageView) {
     iv.animate()
-        .scaleX(0.95f)
-        .scaleY(0.95f)
+        .scaleX(0.80f)
+        .scaleY(0.80f)
         .setDuration(100)
         .withEndAction {
             // Reset the scale back to normal

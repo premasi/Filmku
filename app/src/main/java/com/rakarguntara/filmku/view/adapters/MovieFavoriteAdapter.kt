@@ -21,7 +21,7 @@ class MovieFavoriteAdapter: RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavor
     class MovieFavoriteViewHolder(private val binding: RvContentMovieFavoritesItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: DetailMovieResponse){
             Glide.with(itemView.context)
-                .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w200${item.posterPath}")
+                .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w500${item.backdropPath}")
                 .into(binding.ivMoviePoster)
 
             binding.tvMovieTitle.text = item.title

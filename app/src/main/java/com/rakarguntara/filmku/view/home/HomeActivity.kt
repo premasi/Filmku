@@ -12,9 +12,6 @@ import com.rakarguntara.filmku.view.home.fragments.AboutFragment
 import com.rakarguntara.filmku.view.home.fragments.HomeFragment
 import com.rakarguntara.filmku.view.home.fragments.TagFavoritesFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -35,27 +32,31 @@ class HomeActivity : AppCompatActivity() {
 
         //setup bottom navigation
         setupBottomNavigation()
+
+        // Load default fragment
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fl_fragment, HomeFragment())
+                .commitNow()
+        }
     }
 
-    private fun replaceFragment(fragment: Fragment){
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fl_fragment, fragment)
-        fragmentTransaction.commit()
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_fragment, fragment)
+            .commit()
     }
 
     private fun setupBottomNavigation() {
-        CoroutineScope(Dispatchers.Main).launch {
-            replaceFragment(HomeFragment())
-            binding.bnvMenu.setOnItemSelectedListener {
-                when(it.itemId){
-                    R.id.bn_home -> replaceFragment(HomeFragment())
-                    R.id.bn_tag_favorite -> replaceFragment(TagFavoritesFragment())
-                    R.id.bn_about -> replaceFragment(AboutFragment())
-                    else -> {}
-                }
-                true
+        binding.bnvMenu.setOnItemSelectedListener { menuItem ->
+            val fragment = when (menuItem.itemId) {
+                R.id.bn_home -> HomeFragment()
+                R.id.bn_tag_favorite -> TagFavoritesFragment()
+                R.id.bn_about -> AboutFragment()
+                else -> return@setOnItemSelectedListener false
             }
+            replaceFragment(fragment) // Perform fragment replacement
+            true
         }
     }
 

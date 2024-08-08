@@ -30,10 +30,12 @@
                 android:id="@+id/iv_arrow_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:paddingStart="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/arrow_back"
                 android:src="@drawable/ic_arrow_back"
+                android:background="@drawable/custom_circle_shape"
                 app:layout_constraintStart_toStartOf="@id/iv_movie_detail"
                 app:layout_constraintTop_toTopOf="@id/iv_movie_detail"
                 app:tint="@color/orange" />
