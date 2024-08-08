@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rakarguntara.filmku.models.DetailMovieResponse
 import com.rakarguntara.filmku.repository.local.LocalRepository
+import com.rakarguntara.filmku.utils.togglestate.ToggleResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,12 @@ class LocalViewModels @Inject constructor(private val localRepository: LocalRepo
     private val _movie = MutableStateFlow<DetailMovieResponse?>(null)
     val movie: StateFlow<DetailMovieResponse?> = _movie.asStateFlow()
 
+    private val _isFavorite = MutableStateFlow(false)
+    val isFavorite: StateFlow<Boolean> = _isFavorite.asStateFlow()
+
+    private val _toggleResult = MutableStateFlow<ToggleResult>(ToggleResult.None)
+    val toggleResult: StateFlow<ToggleResult> = _toggleResult.asStateFlow()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             localRepository.getAllMovieFavorite().distinctUntilChanged()
@@ -32,16 +39,21 @@ class LocalViewModels @Inject constructor(private val localRepository: LocalRepo
         }
     }
 
-    fun getMovieDetailById(id: Int) = viewModelScope.launch {
-        _movie.value = localRepository.getMovieDetailById(id)
+    fun checkIfFavorite(id: Int) = viewModelScope.launch {
+        localRepository.getMovieDetailById(id).collect { movie ->
+            _isFavorite.value = movie != null
+        }
     }
 
-    fun insertMovieDetail(detailMovieResponse: DetailMovieResponse) = viewModelScope.launch {
-        localRepository.insertMovieDetail(detailMovieResponse)
-    }
-
-    fun deleteMovieById(id: Int) = viewModelScope.launch {
-        localRepository.deleteMovieDetailById(id)
+    fun toggleFavorite(movie: DetailMovieResponse) = viewModelScope.launch {
+        if (_isFavorite.value) {
+            localRepository.deleteMovieDetailById(movie.id!!)
+            _toggleResult.value = ToggleResult.Deleted
+        } else {
+            localRepository.insertMovieDetail(movie)
+            _toggleResult.value = ToggleResult.Added
+        }
+        checkIfFavorite(movie.id!!)
     }
 
 }

@@ -1,12 +1,15 @@
 package com.rakarguntara.filmku.view.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.rakarguntara.filmku.BuildConfig
@@ -18,10 +21,13 @@ import com.rakarguntara.filmku.models.ProductionCompaniesItem
 import com.rakarguntara.filmku.network.NetworkState
 import com.rakarguntara.filmku.utils.animations.animateIvClick
 import com.rakarguntara.filmku.utils.loading.showLoading
+import com.rakarguntara.filmku.utils.togglestate.ToggleResult
 import com.rakarguntara.filmku.view.adapters.CompanyAdapter
 import com.rakarguntara.filmku.view.adapters.GenreAdapter
+import com.rakarguntara.filmku.viewmodels.local.LocalViewModels
 import com.rakarguntara.filmku.viewmodels.network.DetalViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailMovieActivity : AppCompatActivity() {
@@ -32,6 +38,7 @@ class DetailMovieActivity : AppCompatActivity() {
     private var movieDetailData : DetailMovieResponse? = null
     //view model
     private val detalViewModel: DetalViewModel by viewModels()
+    private val localViewModels: LocalViewModels by viewModels()
     //adapter
     private var genreAdapter: GenreAdapter? = null
     private var companyAdapter: CompanyAdapter? = null
@@ -58,6 +65,47 @@ class DetailMovieActivity : AppCompatActivity() {
 
         //get detail from api
         setupDetailFromApi(movieDetailData!!)
+
+        //setup favorite condtion
+        setupFavoriteCondition(movieDetailData!!)
+
+    }
+
+    private fun setupFavoriteCondition(movieDetailData: DetailMovieResponse) {
+        lifecycleScope.launch {
+            localViewModels.isFavorite.collect { isFavorite ->
+                updateToggleButton(isFavorite)
+            }
+        }
+
+        lifecycleScope.launch {
+            localViewModels.toggleResult.collect{ result ->
+                when(result){
+                    ToggleResult.Added -> Toast.makeText(this@DetailMovieActivity, "Added to favorite!", Toast.LENGTH_SHORT).show()
+                    ToggleResult.Deleted -> Toast.makeText(this@DetailMovieActivity, "Removed from favorite!", Toast.LENGTH_SHORT).show()
+                    ToggleResult.None -> {}
+                }
+
+            }
+        }
+
+        localViewModels.checkIfFavorite(movieDetailData.id!!)
+
+        binding.ivFavorite.setOnClickListener {
+            animateIvClick(binding.ivFavorite)
+            localViewModels.toggleFavorite(movieDetailData)
+        }
+    }
+
+    private fun updateToggleButton(isFavorite: Boolean){
+        val tintColor = if (isFavorite)
+            Color.RED
+        else
+            ContextCompat.getColor(this, R.color.teal)
+
+        binding.ivFavorite.apply {
+            setColorFilter(tintColor)
+        }
     }
 
     private fun setupDetailFromApi(movieDetailData: DetailMovieResponse) {

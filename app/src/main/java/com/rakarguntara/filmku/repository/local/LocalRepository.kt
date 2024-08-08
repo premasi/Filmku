@@ -8,6 +8,6 @@ import javax.inject.Inject
 class LocalRepository @Inject constructor(private val movieFavoriteDao: MovieFavoriteDao) {
     fun getAllMovieFavorite(): Flow<List<DetailMovieResponse>> = movieFavoriteDao.getAllMovieFavorite()
     suspend fun insertMovieDetail(detailMovieResponse: DetailMovieResponse) = movieFavoriteDao.insertMovieDetail(detailMovieResponse)
-    fun getMovieDetailById(id: Int) : DetailMovieResponse = movieFavoriteDao.getMovieDetailById(id)
+    fun getMovieDetailById(id: Int): Flow<DetailMovieResponse?> = movieFavoriteDao.getMovieDetailById(id)
     suspend fun deleteMovieDetailById(id: Int) = movieFavoriteDao.deleteMovieDetailById(id)
 }

@@ -16,7 +16,7 @@ interface MovieFavoriteDao {
     fun getAllMovieFavorite(): Flow<List<DetailMovieResponse>>
 
     @Query("SELECT * FROM movie_detail_table WHERE id= :id")
-    fun getMovieDetailById(id: Int): DetailMovieResponse
+    fun getMovieDetailById(id: Int): Flow<DetailMovieResponse?>
 
     @Query("DELETE FROM movie_detail_table WHERE id = :id")
     suspend fun deleteMovieDetailById(id: Int)
