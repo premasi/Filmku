@@ -1,4 +1,4 @@
-package com.rakarguntara.filmku.room
+package com.rakarguntara.filmku.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -13,10 +13,10 @@ interface MovieFavoriteDao {
     suspend fun insertMovieDetail(detailMovieResponse: DetailMovieResponse)
 
     @Query("SELECT * FROM movie_detail_table")
-    suspend fun getAllMovieFavorite(): Flow<List<DetailMovieResponse>>
+    fun getAllMovieFavorite(): Flow<List<DetailMovieResponse>>
 
     @Query("SELECT * FROM movie_detail_table WHERE id= :id")
-    suspend fun getMovieDetailById(id: Int): DetailMovieResponse
+    fun getMovieDetailById(id: Int): DetailMovieResponse
 
     @Query("DELETE FROM movie_detail_table WHERE id = :id")
     suspend fun deleteMovieDetailById(id: Int)

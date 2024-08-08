@@ -1,4 +1,4 @@
-package com.rakarguntara.filmku.repository
+package com.rakarguntara.filmku.repository.network
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData

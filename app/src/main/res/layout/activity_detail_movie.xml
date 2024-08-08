@@ -62,6 +62,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:textAlignment="center"
                 android:fontFamily="@font/avenirnextltpro_demi"
                 android:textColor="@color/teal"
                 android:textSize="16sp"

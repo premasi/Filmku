@@ -3,7 +3,14 @@ package com.rakarguntara.filmku.models
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.rakarguntara.filmku.utils.typeconverters.BelongTypeConverters
+import com.rakarguntara.filmku.utils.typeconverters.CompanyTypeConverters
+import com.rakarguntara.filmku.utils.typeconverters.GenreTypeConverters
+import com.rakarguntara.filmku.utils.typeconverters.LanguagesTypeConverters
+import com.rakarguntara.filmku.utils.typeconverters.OriginTypeConverters
+import com.rakarguntara.filmku.utils.typeconverters.ProductionTypeConverters
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "movie_detail_table")
@@ -29,17 +36,19 @@ data class DetailMovieResponse(
 	val revenue: Int? = null,
 
 	@field:SerializedName("genres")
-	val genres: List<GenresItem>,
+	@TypeConverters(GenreTypeConverters::class)
+	val genres: List<GenresItem>? = null,
 
 	@field:SerializedName("popularity")
 	val popularity: Double? = null,
 
 	@field:SerializedName("production_countries")
-	val productionCountries: List<ProductionCountriesItem?>? = null,
+	@TypeConverters(ProductionTypeConverters::class)
+	val productionCountries: List<ProductionCountriesItem>? = null,
 
 	@PrimaryKey
 	@field:SerializedName("id")
-	val id: Int,
+	val id: Int? = null,
 
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null,
@@ -60,13 +69,16 @@ data class DetailMovieResponse(
 	val posterPath: String? = null,
 
 	@field:SerializedName("origin_country")
-	val originCountry: List<String?>? = null,
+	@TypeConverters(OriginTypeConverters::class)
+	val originCountry: List<String>? = null,
 
 	@field:SerializedName("spoken_languages")
+	@TypeConverters(LanguagesTypeConverters::class)
 	val spokenLanguages: List<SpokenLanguagesItem>? = null,
 
 	@field:SerializedName("production_companies")
-	val productionCompanies: List<ProductionCompaniesItem>,
+	@TypeConverters(CompanyTypeConverters::class)
+	val productionCompanies: List<ProductionCompaniesItem>? = null,
 
 	@field:SerializedName("release_date")
 	val releaseDate: String? = null,
@@ -75,6 +87,7 @@ data class DetailMovieResponse(
 	val voteAverage: Double? = null,
 
 	@field:SerializedName("belongs_to_collection")
+	@TypeConverters(BelongTypeConverters::class)
 	val belongsToCollection: BelongsToCollection? = null,
 
 	@field:SerializedName("tagline")

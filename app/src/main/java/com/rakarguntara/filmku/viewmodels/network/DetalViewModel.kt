@@ -1,7 +1,7 @@
-package com.rakarguntara.filmku.viewmodels
+package com.rakarguntara.filmku.viewmodels.network
 
 import androidx.lifecycle.ViewModel
-import com.rakarguntara.filmku.repository.NetworkRepository
+import com.rakarguntara.filmku.repository.network.NetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

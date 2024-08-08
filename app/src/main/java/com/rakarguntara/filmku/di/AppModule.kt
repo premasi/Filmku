@@ -1,10 +1,15 @@
 package com.rakarguntara.filmku.di
 
+import android.content.Context
+import androidx.room.Room
 import com.rakarguntara.filmku.BuildConfig
 import com.rakarguntara.filmku.network.ApiService
+import com.rakarguntara.filmku.room.dao.MovieFavoriteDao
+import com.rakarguntara.filmku.room.database.RoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,6 +21,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
+    @Singleton
+    @Provides
+    fun provideMovieFavoriteDao(roomDatabase: RoomDatabase): MovieFavoriteDao =
+        roomDatabase.movieFavDao()
+
+    @Singleton
+    @Provides
+    fun provideRoomDatabase(@ApplicationContext context: Context): RoomDatabase =
+        Room.databaseBuilder(context, RoomDatabase::class.java, "room_database")
+            .fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides

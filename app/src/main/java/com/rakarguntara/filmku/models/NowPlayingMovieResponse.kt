@@ -14,7 +14,7 @@ data class NowPlayingMovieResponse(
 	val totalPages: Int? = null,
 
     @field:SerializedName("results")
-	val results: List<ResultsNowPlayingItem>,
+	val results: List<ResultsNowPlayingItem>? = null,
 
     @field:SerializedName("total_results")
 	val totalResults: Int? = null

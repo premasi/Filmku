@@ -20,7 +20,7 @@ import com.rakarguntara.filmku.utils.animations.animateIvClick
 import com.rakarguntara.filmku.utils.loading.showLoading
 import com.rakarguntara.filmku.view.adapters.CompanyAdapter
 import com.rakarguntara.filmku.view.adapters.GenreAdapter
-import com.rakarguntara.filmku.viewmodels.DetalViewModel
+import com.rakarguntara.filmku.viewmodels.network.DetalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,7 +61,7 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun setupDetailFromApi(movieDetailData: DetailMovieResponse) {
-        detalViewModel.getMovieDetail(movieDetailData.id).observe(this@DetailMovieActivity){ response ->
+        detalViewModel.getMovieDetail(movieDetailData.id!!).observe(this@DetailMovieActivity){ response ->
             if(response != null){
                 when(response){
                     is NetworkState.Error -> {
@@ -94,8 +94,8 @@ class DetailMovieActivity : AppCompatActivity() {
         binding.tvVote.text = movieDetailData.voteCount.toString()
         binding.tvMovieInformationDateActual.text = movieDetailData.releaseDate.toString()
         binding.tvOverviewActual.text = movieDetailData.overview
-        setupGenreAdapter(movieDetailData.genres)
-        setupCompanyAdapter(movieDetailData.productionCompanies)
+        setupGenreAdapter(movieDetailData.genres!!)
+        setupCompanyAdapter(movieDetailData.productionCompanies!!)
     }
 
     private fun setupCompanyAdapter(productionCompanies: List<ProductionCompaniesItem>) {

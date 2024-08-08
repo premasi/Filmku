@@ -30,7 +30,7 @@ import com.rakarguntara.filmku.view.adapters.MoviePopularAdapter
 import com.rakarguntara.filmku.view.adapters.MovieTopRatedAdapter
 import com.rakarguntara.filmku.view.adapters.MovieUpcomingAdapter
 import com.rakarguntara.filmku.view.detail.DetailMovieActivity
-import com.rakarguntara.filmku.viewmodels.HomeViewModel
+import com.rakarguntara.filmku.viewmodels.network.HomeViewModel
 
 class HomeFragment : Fragment() {
     //layout
@@ -151,7 +151,7 @@ class HomeFragment : Fragment() {
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationStatusActual.text = data.status
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationPopularityActual.text = data.voteAverage.toString().split(".")[0]
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationDateActual.text = data.releaseDate
-        setupGenreAdapter(data.genres)
+        setupGenreAdapter(data.genres!!)
 
         popupMovieSimpleInformationBinding.ivClose.setOnClickListener {
             animateIvClick(popupMovieSimpleInformationBinding.ivClose)
@@ -199,7 +199,7 @@ class HomeFragment : Fragment() {
                     }
                     is NetworkState.Success -> {
                         showLoading(binding.pbHome, false)
-                        movieUpcomingAdapter?.setData(response.data.results)
+                        movieUpcomingAdapter?.setData(response.data.results!!)
                         binding.rvMovieUpcoming.adapter = movieUpcomingAdapter
                     }
                 }
@@ -222,7 +222,7 @@ class HomeFragment : Fragment() {
                     }
                     is NetworkState.Success -> {
                         showLoading(binding.pbHome, false)
-                        movieNowPlayingAdapter?.setData(response.data.results)
+                        movieNowPlayingAdapter?.setData(response.data.results!!)
                         binding.rvMovieNowPlaying.adapter = movieNowPlayingAdapter
                     }
                 }
@@ -245,7 +245,7 @@ class HomeFragment : Fragment() {
                     }
                     is NetworkState.Success -> {
                         showLoading(binding.pbHome, false)
-                        movieTopRatedAdapter?.setData(response.data.results)
+                        movieTopRatedAdapter?.setData(response.data.results!!)
                         binding.rvMovieTopRated.adapter = movieTopRatedAdapter
                     }
                 }
@@ -268,7 +268,7 @@ class HomeFragment : Fragment() {
                     }
                     is NetworkState.Success -> {
                         showLoading(binding.pbHome, false)
-                        moviePopularAdapter?.setData(response.data.results)
+                        moviePopularAdapter?.setData(response.data.results!!)
                         binding.rvMoviePopular.adapter = moviePopularAdapter
                     }
                 }
