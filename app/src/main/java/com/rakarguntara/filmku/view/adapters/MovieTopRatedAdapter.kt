@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rakarguntara.filmku.BuildConfig
+import com.rakarguntara.filmku.R
 import com.rakarguntara.filmku.databinding.RvContentMovieItemBinding
 import com.rakarguntara.filmku.models.ResultsTopRatedItem
 import com.rakarguntara.filmku.utils.animations.animateMcvClick
@@ -29,6 +30,8 @@ class MovieTopRatedAdapter: RecyclerView.Adapter<MovieTopRatedAdapter.MovieTopRa
         fun bind(item: ResultsTopRatedItem){
             Glide.with(itemView.context)
                 .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w200${item.posterPath}")
+                .placeholder(R.drawable.iv_thank)
+                .error(R.drawable.iv_thank)
                 .into(binding.ivMoviePopularItem)
 
             binding.mcvMoviePopularItem.setOnClickListener {

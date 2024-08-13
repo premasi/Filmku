@@ -176,6 +176,8 @@ class HomeFragment : Fragment() {
     private fun setMovieDetailSimpleData(data: DetailMovieResponse) {
         Glide.with(requireActivity())
             .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w200${data.posterPath}")
+            .placeholder(R.drawable.iv_thank)
+            .error(R.drawable.iv_thank)
             .into(popupMovieSimpleInformationBinding.ivMovieSimpleInformation)
 
         popupMovieSimpleInformationBinding.tvMovieSimpleInformationTitle.text = data.title

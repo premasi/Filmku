@@ -29,7 +29,6 @@ class LocalViewModels @Inject constructor(private val localRepository: LocalRepo
         viewModelScope.launch(Dispatchers.IO) {
             localRepository.getAllMovieFavorite().distinctUntilChanged()
                 .collect{list->
-
                     if(list.isEmpty()){
                         _movieList.value = emptyList()
                     } else {

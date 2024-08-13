@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rakarguntara.filmku.BuildConfig
+import com.rakarguntara.filmku.R
 import com.rakarguntara.filmku.databinding.RvContentMovieFavoritesItemBinding
 import com.rakarguntara.filmku.models.DetailMovieResponse
 import com.rakarguntara.filmku.utils.animations.animateViewClick
@@ -33,6 +34,8 @@ class MovieFavoriteAdapter: RecyclerView.Adapter<MovieFavoriteAdapter.MovieFavor
         fun bind(item: DetailMovieResponse){
             Glide.with(itemView.context)
                 .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w500${item.backdropPath}")
+                .placeholder(R.drawable.iv_thank)
+                .error(R.drawable.iv_thank)
                 .into(binding.ivMoviePoster)
 
             binding.tvMovieTitle.text = item.title

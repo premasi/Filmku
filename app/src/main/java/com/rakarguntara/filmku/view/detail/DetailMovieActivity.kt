@@ -109,9 +109,10 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun setupMovieDetailData(movieDetailData: DetailMovieResponse) {
         Glide.with(this@DetailMovieActivity)
             .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w500${movieDetailData.backdropPath}")
-            .error(R.color.navy)
+            .placeholder(R.drawable.iv_no_favorite)
+            .error(R.drawable.iv_no_favorite)
             .into(binding.ivMovieDetail)
-        val tagline = "\"${movieDetailData.tagline}\""
+        val tagline = if(movieDetailData.tagline!!.isNotEmpty()) "\"${movieDetailData.tagline}\"" else "\"-\""
         binding.tvMovieDetailTitle.text = movieDetailData.title
         binding.tvTagline.text = tagline
         binding.tvRate.text = movieDetailData.voteAverage.toString().split(".")[0]

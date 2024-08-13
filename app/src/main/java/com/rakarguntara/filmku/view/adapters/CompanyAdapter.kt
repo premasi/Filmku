@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rakarguntara.filmku.BuildConfig
+import com.rakarguntara.filmku.R
 import com.rakarguntara.filmku.databinding.RvContentCompanyItemBinding
 import com.rakarguntara.filmku.models.ProductionCompaniesItem
 
@@ -21,7 +22,11 @@ class CompanyAdapter: RecyclerView.Adapter<CompanyAdapter.CompanyViewHolder>() {
         fun bind(item: ProductionCompaniesItem){
             Glide.with(itemView.context)
                 .load(BuildConfig.IMAGE_BASE_URL+"/t/p/w500${item.logoPath}")
+                .placeholder(R.drawable.iv_thank)
+                .error(R.drawable.iv_thank)
                 .into(binding.ivCompany)
+
+
 
             binding.tvCompanyName.text = item.name
         }
